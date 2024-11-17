@@ -1,0 +1,4 @@
+ls
+cd testing
+ls
+touch testdir/testfile1.txt
