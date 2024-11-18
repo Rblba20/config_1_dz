@@ -45,8 +45,24 @@ class ShellEmulator:
         virtual_files_in_dir = [
             f[len(current_path):] for f in self.virtual_files.keys() if f.startswith(current_path)
         ]
+        list_ls_current = []
+        for file in filtered_files:
+            if '/' in file:
+                if file[:file.index('/')] not in list_ls_current:
+                    list_ls_current.append(file[:file.index('/')])
+            else:
+                if file not in list_ls_current:
+                    list_ls_current.append(file)
+        for file in virtual_files_in_dir:
+            if '/' in file:
+                if file[:file.index('/')] not in list_ls_current:
+                    list_ls_current.append(file[:file.index('/')])
+            else:
+                if file not in list_ls_current:
+                    list_ls_current.append(file)
 
-        return '\n'.join(filtered_files + virtual_files_in_dir)
+        # return '\n'.join(filtered_files + virtual_files_in_dir)
+        return '\n'.join(list_ls_current)
 
     def cd(self, directory):
         # Переход в другую директорию (эмуляция).
@@ -143,7 +159,7 @@ class ShellEmulator:
         # Если файл не существует, создаем пустой  файл и устанавливаем начальную метку времени
         self.virtual_files[file_path] = ""  # Пустое содержимое файла
         self.file_timestamps[file_path] = time.ctime()  # Устанавливаем текущее время как метку времени
-     #   return f"Файл '{filename}' создан: {self.file_timestamps[file_path]}"
+        #   return f"Файл '{filename}' создан: {self.file_timestamps[file_path]}"
         return f"Файл '{filename}' создан"
         # Если файл не существует, создаем пустой файл
         # extract_path = "./temp_fs"
