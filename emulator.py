@@ -23,9 +23,6 @@ if __name__ == "__main__":
 
 
 # Для запуска эмулятора из командной строки:
-# python emulator.py user test_fs.tar
-# python emulator.py username /path/to/fs_archive.tar /path/to/startup_script.txt
-# python emulator.py username /path/to/fs_archive.tar /path/to/startup_script.txt
 # python emulator.py username test_fs.tar startup_script.txt
 # УБРАТЬ ОS
 # tar -cvf test_fs.tar testing
