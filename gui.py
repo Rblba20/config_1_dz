@@ -76,6 +76,19 @@ class ShellGUI:
 
 def run_gui(username, fs, fs_archive, start_script):
     shell = ShellEmulator(username, fs, fs_archive, start_script)
-    shell.execute_script()
     gui = ShellGUI(shell)
+
+    # Выполняем стартовый скрипт и записываем результат в GUI
+    output = shell.execute_script()
+    if output:
+        gui.text_output.insert(tk.END, f"{output}\n")
+        gui.text_output.see(tk.END)  # Прокрутка вниз
+
     gui.start()
+
+
+# def run_gui(username, fs, fs_archive, start_script):
+#     shell = ShellEmulator(username, fs, fs_archive, start_script)
+#     shell.execute_script()
+#     gui = ShellGUI(shell)
+#     gui.start()

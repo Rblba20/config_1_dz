@@ -254,18 +254,34 @@ class ShellEmulator:
     def exit(self):
         sys.exit(0)
 
+    # def execute_script(self):
+    #     # Чтение команд из стартового скрипта и их выполнение
+    #     if self.script_path:
+    #         try:
+    #             with open(self.script_path, 'r') as script_file:
+    #                 for line in script_file:
+    #                     line = line.strip()  # Убираем лишние пробелы
+    #                     if line:
+    #                         print(f"Выполнение: {line}")
+    #                         result = self.execute_command(line)
+    #                         print(result)
+    #         except FileNotFoundError:
+    #             print(f"Ошибка: Файл стартового скрипта '{self.script_path}' не найден.")
+    #     else:
+    #         print("Непредоставлен стартовый скрипт.")
     def execute_script(self):
-        # Чтение команд из стартового скрипта и их выполнение
+        # Выполнение скрипта и сбор вывода
+        output = ""
         if self.script_path:
             try:
-                with open(self.script_path, 'r') as script_file:
+                with open(self.script_path, "r") as script_file:
                     for line in script_file:
-                        line = line.strip()  # Убираем лишние пробелы
-                        if line:
-                            print(f"Выполнение: {line}")
-                            result = self.execute_command(line)
-                            print(result)
+                        command = line.strip()
+                        if command:  # Пропускаем пустые строки
+                            result = self.execute_command(command)
+                            output += f"{self.prompt()}{command}\n"
+                            if result:
+                                output += f"{result}\n"
             except FileNotFoundError:
-                print(f"Ошибка: Файл стартового скрипта '{self.script_path}' не найден.")
-        else:
-            print("Непредоставлен стартовый скрипт.")
+                output += f"Ошибка: стартовый скрипт '{self.script_path}' не найден.\n"
+        return output
